@@ -21,28 +21,35 @@
         crossorigin="anonymous"></script>
 
 <script>
-  const images = ['photo-1.jpeg', 'photo-2.jpeg', 'photo-3.jpeg'];
+  fetch('/images.json').then(function (response) {
+    response.json().then(function (json) {
+      const images = json;
 
-  // selecting the row, so we can add more elements to it
-  const row = document.querySelector('#gallery');
+      // selecting the row, so we can add more elements to it
+      const row = document.querySelector('#gallery');
 
-  images.forEach(function (image) {
-    const imageUrl = '/images/' + image;
+      images.forEach(function (image) {
+        const imageUrl = 'images/' + image.name;
 
-    const column = document.createElement('div'); // column is now a div
-    column.classList.add('col-12');
-    column.classList.add('col-md-6');
-    column.classList.add('col-lg-4');
+        const column = document.createElement('div'); // column is now a div
+        column.classList.add('col-12');
+        column.classList.add('col-md-6');
+        column.classList.add('col-lg-4');
 
-    const img = document.createElement('img');
-    img.classList.add('img-fluid');
-    img.classList.add('m-2');
-    img.setAttribute('src', imageUrl);
+        const img = document.createElement('img');
+        img.classList.add('img-fluid');
+        img.classList.add('m-2');
+        img.setAttribute('src', imageUrl);
 
-    column.append(img);
+        column.append(img);
 
-    row.append(column);
+        row.append(column);
+      });
+    })
+  }).catch(function () {
+    console.log('The images.json file could not be accessed.');
   });
 </script>
 </body>
 </html>
+
